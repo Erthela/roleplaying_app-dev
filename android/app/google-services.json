@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "653940883523",
+    "project_id": "roleplayingapp-ebfd4",
+    "storage_bucket": "roleplayingapp-ebfd4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:653940883523:android:5de70b6eb9e111921114f6",
+        "android_client_info": {
+          "package_name": "com.aowar.roleplaying_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "653940883523-95pb0kaqi9t7oup01g0vvol3dtvggjc3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC_z37U4chf25_L99NEIR74Ufqomoru2FM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "653940883523-95pb0kaqi9t7oup01g0vvol3dtvggjc3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
