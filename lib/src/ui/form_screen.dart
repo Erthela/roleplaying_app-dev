@@ -1,8 +1,13 @@
 import 'dart:math';
+import 'dart:developer';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
+import 'package:roleplaying_app/src/bloc/auth/auth_bloc.dart';
+import 'package:roleplaying_app/src/models/profile.dart';
+import 'package:roleplaying_app/src/services/profile_service.dart';
 import 'package:roleplaying_app/src/ui/Utils.dart';
 
 class FormScreen extends StatefulWidget {
@@ -14,6 +19,20 @@ class FormScreen extends StatefulWidget {
 }
 
 class _FormScreenState extends State<FormScreen> {
+  late TextEditingController _titleController;
+  late TextEditingController _textController;
+
+  FormService _formService = FormService();
+
+  late String _title;
+  late String _text;
+
+  @override
+  void initState() {
+    super.initState();
+    _titleController = TextEditingController();
+    _textController = TextEditingController();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +47,31 @@ class _FormScreenState extends State<FormScreen> {
           Positioned(
             top: 15,
             right: 15,
-            child: Utils.GenerateButton('', Icons.check, context),
+            child: Neumorphic(
+              style: NeumorphicStyle(
+                shape: NeumorphicShape.flat,
+                depth: 5.0,
+                color: Theme.of(context).primaryColor,
+                boxShape: NeumorphicBoxShape.circle(),
+              ),
+              child: IconButton(
+                icon: Icon(Icons.check),
+                color: Colors.white,
+                iconSize: sqrt(MediaQuery.of(context).size.height + MediaQuery.of(context).size.width),
+                onPressed: () async {
+                  _title = _titleController.text;
+                  _text = _textController.text;
+
+                  Profile _form = Profile(context.select((AuthBloc bloc) => bloc.state.user.id), _title, _text);
+
+                  print(_form.toString());
+
+                  _formService.addOrUpdateProfile(_form);
+
+                  Navigator.pop(context);
+                },
+              ),
+            )
           ),
           Center(
             child: Padding(
@@ -52,44 +95,45 @@ class _FormScreenState extends State<FormScreen> {
                             width: MediaQuery.of(context).size.width * 0.5,
                             height: MediaQuery.of(context).size.height / 22,
                             child: Neumorphic(
-                              style: NeumorphicStyle(
-                                  shape: NeumorphicShape.convex,
-                                  boxShape: NeumorphicBoxShape.roundRect(BorderRadius.circular(10)),
-                                  depth: 5.0,
-                                  color: Theme.of(context).cardColor
-                              ),
-                              child: Padding(
-                                padding: EdgeInsets.only(left: MediaQuery.of(context).size.width / 10),
-                                child: TextField(
+                                style: NeumorphicStyle(
+                                    shape: NeumorphicShape.convex,
+                                    boxShape: NeumorphicBoxShape.roundRect(BorderRadius.circular(10)),
+                                    depth: 5.0,
+                                    color: Theme.of(context).cardColor
+                                ),
+                                child: Padding(
+                                  padding: EdgeInsets.only(left: MediaQuery.of(context).size.width / 10),
+                                  child: TextField(
                                     decoration: InputDecoration(
                                       border: InputBorder.none,
                                       hintText: "Название анкеты",
-                                    )
-                                ),
-                              )
+                                    ),
+                                    controller: _titleController,
+                                  ),
+                                )
                             ),
                           ),
                         ),
                         Padding(
-                          padding: EdgeInsets.only(top: MediaQuery.of(context).size.height / 80),
-                          child: SizedBox(
-                              width: MediaQuery.of(context).size.width / 1.38,
-                              height: MediaQuery.of(context).size.height / 3.07,
-                              child: NeumorphicButton(
-                                style: NeumorphicStyle(
-                                  shape: NeumorphicShape.flat,
-                                  boxShape: NeumorphicBoxShape.roundRect(BorderRadius.circular(5)),
-                                  depth: 5.0,
-                                  color: Theme.of(context).accentColor,
-                                ),
-                                child: Center(
-                                  child: Icon(Icons.image_outlined,
-                                    size: sqrt((MediaQuery.of(context).size.height + MediaQuery.of(context).size.width)*60),
+                            padding: EdgeInsets.only(top: MediaQuery.of(context).size.height / 80),
+                            child: SizedBox(
+                                width: MediaQuery.of(context).size.width / 1.38,
+                                height: MediaQuery.of(context).size.height / 3.07,
+                                child: NeumorphicButton(
+                                  style: NeumorphicStyle(
+                                    shape: NeumorphicShape.flat,
+                                    boxShape: NeumorphicBoxShape.roundRect(BorderRadius.circular(5)),
+                                    depth: 5.0,
+                                    color: Theme.of(context).accentColor,
                                   ),
-                                ),
-                                onPressed: () => Navigator.pushNamed(context, ''),
-                              )
-                          )
+                                  child: Center(
+                                    child: Icon(Icons.image_outlined,
+                                      size: sqrt((MediaQuery.of(context).size.height + MediaQuery.of(context).size.width)*60),
+                                    ),
+                                  ),
+                                  onPressed: () => Navigator.pushNamed(context, ''),
+                                )
+                            )
                         ),
                         Padding(
                           padding: EdgeInsets.only(top: MediaQuery.of(context).size.height / 60),
@@ -126,13 +170,14 @@ class _FormScreenState extends State<FormScreen> {
                                                   color: Theme.of(context).accentColor,
                                                 ),
                                                 child: TextField(
-                                                    decoration: InputDecoration(
+                                                  decoration: InputDecoration(
                                                       border: InputBorder.none,
                                                       hintText: "Текст",
                                                       hintStyle: TextStyle(
                                                         color: Theme.of(context).textTheme.bodyText1?.color,
                                                       )
-                                                    )
+                                                  ),
+                                                  controller: _textController,
                                                 ),
                                               ),
                                             ),
@@ -156,7 +201,7 @@ class _FormScreenState extends State<FormScreen> {
                                                 size: sqrt((MediaQuery.of(context).size.height + MediaQuery.of(context).size.width) / 3),
                                               ),
                                             ),
-                                            onPressed: () => {},
+                                            onPressed: () => { }
                                           ),
                                         ),
                                       )
@@ -192,5 +237,18 @@ class _FormScreenState extends State<FormScreen> {
         ],
       ),
     );
+  }
+
+  void confirmButtonAction(BuildContext context) async {
+    _title = _titleController.text;
+    _text = _textController.text;
+
+    Profile _form = Profile(context.select((AuthBloc bloc) => bloc.state.user.id), _title, _text);
+
+    print(_form.toString());
+
+    _formService.addOrUpdateProfile(_form);
+
+    Navigator.pop(context);
   }
 }

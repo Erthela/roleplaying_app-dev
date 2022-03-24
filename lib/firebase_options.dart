@@ -46,6 +46,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '653940883523',
     projectId: 'roleplayingapp-ebfd4',
     authDomain: 'roleplayingapp-ebfd4.firebaseapp.com',
+    databaseURL: 'https://roleplayingapp-ebfd4-default-rtdb.europe-west1.firebasedatabase.app',
     storageBucket: 'roleplayingapp-ebfd4.appspot.com',
     measurementId: 'G-17E0P9HC84',
   );
@@ -55,6 +56,7 @@ class DefaultFirebaseOptions {
     appId: '1:653940883523:android:5de70b6eb9e111921114f6',
     messagingSenderId: '653940883523',
     projectId: 'roleplayingapp-ebfd4',
+    databaseURL: 'https://roleplayingapp-ebfd4-default-rtdb.europe-west1.firebasedatabase.app',
     storageBucket: 'roleplayingapp-ebfd4.appspot.com',
   );
 }
