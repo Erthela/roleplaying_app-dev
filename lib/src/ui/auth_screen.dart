@@ -45,7 +45,7 @@ class _AuthView extends State<AuthView> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<AuthBloc, AuthState>(
-      buildWhen: (prev, state) => prev.runtimeType != state.runtimeType,
+      // buildWhen: (prev, state) => prev.runtimeType != state.runtimeType,
       builder: (context, state) {
         return Scaffold(
             body: Stack(
@@ -209,6 +209,14 @@ class _AuthView extends State<AuthView> {
                       ],
                     ),
                   ),
+                ),
+                BlocListener<AuthBloc, AuthState>(
+                  listener: (context, state) {
+                    if (state is UserAuthentificated) {
+                      Navigator.pushNamed(context, '/start_screen');
+                    }
+                  },
+                  child: Container(),
                 )
               ],
             )

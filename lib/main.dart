@@ -14,6 +14,7 @@ import 'package:roleplaying_app/src/ui/profile_screen.dart';
 import 'firebase_options.dart';
 
 final appRoutes = <String, WidgetBuilder>{
+  '/start_screen': (BuildContext context) => Landing(),
   '/auth_screen': (BuildContext context) => AuthScreen(),
   '/menu_screen': (BuildContext context) => MenuScreen(),
   '/profile_screen' : (BuildContext context) => ProfileScreen(),
