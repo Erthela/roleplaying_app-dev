@@ -7,12 +7,7 @@ part 'auth_state.dart';
 part 'auth_event.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
-  final AuthService _authService;
-  static final UserModel userModel = UserModel(id: '');
-
-  AuthBloc({required AuthService authService})
-      : _authService = authService,
-        super(const AutStateInit(UserModel(id: ''))){
+  AuthBloc() : super(const AutStateInit(UserModel(id: ''))){
     on<UserLoggedIn>(_onLoggedIn);
     on<UserLoggedOut>(_onLoggedOut);
     on<UserInit>(_onStarted);

@@ -7,6 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:roleplaying_app/src/bloc/auth/auth_bloc.dart';
 import 'package:roleplaying_app/src/models/profile.dart';
+import 'package:roleplaying_app/src/models/user.dart';
 import 'package:roleplaying_app/src/services/profile_service.dart';
 import 'package:roleplaying_app/src/ui/Utils.dart';
 
@@ -19,7 +20,7 @@ class FormScreen extends StatelessWidget {
   FormScreen({Key? key}) : super(key: key);
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => AuthBloc(authService: authService),
+      create: (context) => AuthBloc(),
       child: FormView(),
     );
   }
@@ -55,6 +56,9 @@ class _FormView extends State<FormView> {
     print("Current user:" + context
         .read<AuthBloc>()
         .state.getUser().toString());
+    print("Current state:" + context
+        .read<AuthBloc>()
+        .state.toString());
 
     return Scaffold(
       body: Stack(

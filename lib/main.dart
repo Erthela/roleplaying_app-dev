@@ -58,7 +58,7 @@ class RpApp extends StatelessWidget {
     return NeumorphicApp(
       debugShowCheckedModeBanner: false,
       title: 'Roleplaying app',
-      home: BlocProvider(create: (context) => AuthBloc(authService: authService), child: const Landing()),
+      home: BlocProvider(create: (context) => AuthBloc(), child: const Landing()),
       routes: appRoutes,
       theme: const NeumorphicThemeData(
         baseColor: lightPrimary,

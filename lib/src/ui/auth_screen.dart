@@ -14,7 +14,7 @@ class AuthScreen extends StatelessWidget {
 
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => AuthBloc(authService: authService),
+      create: (context) => AuthBloc(),
       child: AuthView(),
     );
   }
