@@ -10,17 +10,17 @@ import 'landing.dart';
 
 class AuthScreen extends StatelessWidget {
 
+  final AuthService authService = AuthService();
+
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => AuthBloc(),
+      create: (context) => AuthBloc(authService: authService),
       child: AuthView(),
     );
   }
 }
 
 class AuthView extends StatefulWidget {
-  late TextEditingController _controller;
-
   AuthView({Key? key}) : super(key: key);
 
   @override
@@ -46,9 +46,7 @@ class _AuthView extends State<AuthView> {
   Widget build(BuildContext context) {
     return BlocBuilder<AuthBloc, AuthState>(
       builder: (context, state) {
-        return BlocProvider.value(
-            value: BlocProvider.of<AuthBloc>(context),
-            child: Scaffold(
+        return Scaffold(
                 body: Stack(
                   children: [
                     Padding(
@@ -189,6 +187,8 @@ class _AuthView extends State<AuthView> {
                                             .signIn(
                                             _email.trim(), _password.trim());
                                         if (user.id.isNotEmpty) {
+                                          context.read<AuthBloc>().add(
+                                              UserLoggedIn(user: user));
                                           print("User id $user");
                                         }
                                         if (user.isEmpty) {
@@ -203,11 +203,9 @@ class _AuthView extends State<AuthView> {
                                           );
                                           print("User id $user");
                                         } else {
-                                          context.read<AuthBloc>().add(
-                                              UserLoggedIn(user: state.user));
                                           print(context
                                               .read<AuthBloc>()
-                                              .state);
+                                              .state.user);
                                         }
                                       }
                                   )
@@ -219,7 +217,7 @@ class _AuthView extends State<AuthView> {
                     ),
                     BlocListener<AuthBloc, AuthState>(
                       listener: (context, state) {
-                        if (state is UserAuthentificated) {
+                        if (state is AuthStateAuthetificated) {
                           Navigator.pushNamed(context, '/menu_screen');
                         }
                       },
@@ -227,7 +225,6 @@ class _AuthView extends State<AuthView> {
                     )
                   ],
                 )
-            )
         );
       }
       );

@@ -32,7 +32,12 @@ class AuthService {
     await _firebaseAuth.signOut();
   }
 
-  Stream<User?> get currentUser{
-    return _firebaseAuth.authStateChanges();
+  Future<bool> isSignedIn() async {
+    final currentUser  = await _firebaseAuth.currentUser;
+    return currentUser != null;
+  }
+
+  Future<UserModel> getUserFromFirebase() async {
+    return UserModel(id: _firebaseAuth.currentUser!.uid, email: _firebaseAuth.currentUser!.email, name: _firebaseAuth.currentUser?.displayName, photo: _firebaseAuth.currentUser?.photoURL);
   }
 }

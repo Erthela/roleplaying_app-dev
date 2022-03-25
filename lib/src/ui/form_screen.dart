@@ -10,15 +10,29 @@ import 'package:roleplaying_app/src/models/profile.dart';
 import 'package:roleplaying_app/src/services/profile_service.dart';
 import 'package:roleplaying_app/src/ui/Utils.dart';
 
-class FormScreen extends StatefulWidget {
+import '../services/auth_service.dart';
+
+class FormScreen extends StatelessWidget {
+
+  final AuthService authService = AuthService();
 
   FormScreen({Key? key}) : super(key: key);
-
-  @override
-  State<FormScreen> createState() => _FormScreenState();
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (context) => AuthBloc(authService: authService),
+      child: FormView(),
+    );
+  }
 }
 
-class _FormScreenState extends State<FormScreen> {
+class FormView extends StatefulWidget {
+  FormView({Key? key}) : super(key: key);
+
+  @override
+  State<FormView> createState() => _FormView();
+}
+
+class _FormView extends State<FormView> {
   late TextEditingController _titleController;
   late TextEditingController _textController;
 
@@ -36,6 +50,8 @@ class _FormScreenState extends State<FormScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final _user = context.select((AuthBloc bloc) => bloc.state.user!.id);
+
     return Scaffold(
       body: Stack(
         children: [
@@ -62,7 +78,7 @@ class _FormScreenState extends State<FormScreen> {
                   _title = _titleController.text;
                   _text = _textController.text;
 
-                  Profile _form = Profile(context.select((AuthBloc bloc) => bloc.state.user.id), _title, _text);
+                  Profile _form = Profile(_user, _title, _text);
 
                   print(_form.toString());
 
@@ -243,7 +259,7 @@ class _FormScreenState extends State<FormScreen> {
     _title = _titleController.text;
     _text = _textController.text;
 
-    Profile _form = Profile(context.select((AuthBloc bloc) => bloc.state.user.id), _title, _text);
+    Profile _form = Profile(context.select((AuthBloc bloc) => bloc.state.user!.id), _title, _text);
 
     print(_form.toString());
 

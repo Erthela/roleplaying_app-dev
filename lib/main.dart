@@ -5,6 +5,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:flutter/services.dart';
 import 'package:roleplaying_app/src/bloc/auth/auth_bloc.dart';
+import 'package:roleplaying_app/src/models/user.dart';
+import 'package:roleplaying_app/src/services/auth_service.dart';
 import 'package:roleplaying_app/src/ui/auth_screen.dart';
 import 'package:roleplaying_app/src/ui/chat_description_screen.dart';
 import 'package:roleplaying_app/src/ui/chat_screen.dart';
@@ -35,6 +37,8 @@ void main() async {
 class RpApp extends StatelessWidget {
   RpApp({Key? key}) : super(key: key);
 
+  final AuthService authService = AuthService();
+
   void _portraitModeOnly() {
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
@@ -54,7 +58,7 @@ class RpApp extends StatelessWidget {
     return NeumorphicApp(
       debugShowCheckedModeBanner: false,
       title: 'Roleplaying app',
-      home: BlocProvider(create: (_) => AuthBloc(), child: const Landing()),
+      home: BlocProvider(create: (context) => AuthBloc(authService: authService), child: const Landing()),
       routes: appRoutes,
       theme: const NeumorphicThemeData(
         baseColor: lightPrimary,
