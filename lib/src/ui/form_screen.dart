@@ -1,5 +1,5 @@
 import 'dart:math';
-import 'dart:developer';
+import 'dart:developer' as developer;
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -53,12 +53,12 @@ class _FormView extends State<FormView> {
   Widget build(BuildContext context) {
     final _user = context.select((AuthBloc bloc) => bloc.state.getUser()!.id);
 
-    print("Current user:" + context
+    developer.log(context
         .read<AuthBloc>()
-        .state.getUser().toString());
-    print("Current state:" + context
+        .state.getUser().toString(), name: "Current user");
+    developer.log(context
         .read<AuthBloc>()
-        .state.toString());
+        .state.toString(), name: "Current state");
 
     return Scaffold(
       body: Stack(
