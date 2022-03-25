@@ -51,14 +51,11 @@ class _FormView extends State<FormView> {
 
   @override
   Widget build(BuildContext context) {
-    final _user = context.select((AuthBloc bloc) => bloc.state.getUser()!.id);
+    final AuthBloc authBloc = BlocProvider.of<AuthBloc>(context);
+    final _user = authBloc.state.getUser()!.id;
 
-    developer.log(context
-        .read<AuthBloc>()
-        .state.getUser().toString(), name: "Current user");
-    developer.log(context
-        .read<AuthBloc>()
-        .state.toString(), name: "Current state");
+    developer.log(authBloc.state.getUser().toString(), name: "Current user on form screen");
+    developer.log(authBloc.state.toString(), name: "Current state on form screen");
 
     return Scaffold(
       body: Stack(

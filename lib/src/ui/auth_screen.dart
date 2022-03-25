@@ -16,7 +16,7 @@ class AuthScreen extends StatelessWidget {
 
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => AuthBloc(),
+      create: (BuildContext context) => AuthBloc(),
       child: AuthView(),
     );
   }
@@ -46,6 +46,7 @@ class _AuthView extends State<AuthView> {
 
   @override
   Widget build(BuildContext context) {
+    final AuthBloc authBloc = BlocProvider.of<AuthBloc>(context);
     return BlocBuilder<AuthBloc, AuthState>(
       builder: (context, state) {
         return Scaffold(
@@ -189,7 +190,7 @@ class _AuthView extends State<AuthView> {
                                             .signIn(
                                             _email.trim(), _password.trim());
                                         if (user.id.isNotEmpty) {
-                                          context.read<AuthBloc>().add(
+                                          authBloc.add(
                                               UserLoggedIn(user: user));
                                         }
                                         if (user.isEmpty) {
