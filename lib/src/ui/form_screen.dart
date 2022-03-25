@@ -52,6 +52,10 @@ class _FormView extends State<FormView> {
   Widget build(BuildContext context) {
     final _user = context.select((AuthBloc bloc) => bloc.state.getUser()!.id);
 
+    print("Current user:" + context
+        .read<AuthBloc>()
+        .state.getUser().toString());
+
     return Scaffold(
       body: Stack(
         children: [

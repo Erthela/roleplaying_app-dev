@@ -19,7 +19,6 @@ class AutStateInit extends AuthState {
 
 class AuthStateAuthetificated extends AuthState {
   AuthStateAuthetificated(UserModel user) : super(user){
-    print(_user);
   }
 
   @override

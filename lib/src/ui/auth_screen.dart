@@ -214,10 +214,10 @@ class _AuthView extends State<AuthView> {
                     BlocListener<AuthBloc, AuthState>(
                       listener: (context, state) {
                         if (state is AuthStateAuthetificated) {
-                          print(context
+                          print("Current user:" + context
                               .read<AuthBloc>()
-                              .state.getUser());
-                          Navigator.pushNamed(context, '/menu_screen');
+                              .state.getUser().toString());
+                          Navigator.pushNamed(context, '/form_screen');
                         }
                       },
                       child: Container(),

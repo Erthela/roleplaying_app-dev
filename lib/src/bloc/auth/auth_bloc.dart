@@ -18,47 +18,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<UserInit>(_onStarted);
   }
 
-
-  // @override
-  // Stream<AuthState> mapEventToState(AuthEvent event) async* {
-  //   if (event is AutStateInit) {
-  //     yield* _mapAuthInitToState();
-  //   } else if (event is AuthStateAuthetificated) {
-  //     yield* _mapAuthLogInToState();
-  //   } else if (event is AuthStateNotAuthentificated) {
-  //     yield* _mapAuthLogOutToState();
-  //   }
-  // }
-  //
-  // Stream<AuthState> _mapAuthInitToState() async* {
-  //   final isSignedIn = await _authService.isSignedIn();
-  //   if (isSignedIn) {
-  //     final user = await _authService.getUserFromFirebase();
-  //     yield AuthStateAuthetificated(user);
-  //   }
-  //   else {
-  //     yield AuthStateNotAuthentificated();
-  //   }
-  // }
-  //
-  // Stream<AuthState> _mapAuthLogInToState() async* {
-  //   yield AuthStateAuthetificated(await _authService.getUserFromFirebase());
-  // }
-  //
-  // Stream<AuthState> _mapAuthLogOutToState() async* {
-  //   yield AuthStateNotAuthentificated();
-  //   _authService.logOut();
-  // }
-
-  Future<void> _onStarted(UserInit event, Emitter<AuthState> emit) async {
-    final isSignedIn = await _authService.isSignedIn();
-    if (isSignedIn) {
-      final user = await _authService.getUserFromFirebase();
-      AuthStateAuthetificated(user);
-    }
-    else {
-      AuthStateNotAuthentificated();
-    }
+  void _onStarted(UserInit event, Emitter<AuthState> emit) {
+    emit(const AutStateInit(UserModel.empty));
     print("Starting log in");
   }
 
