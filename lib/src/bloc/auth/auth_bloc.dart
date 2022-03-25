@@ -17,6 +17,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<UserLoggedIn>(_onLoggedIn);
     on<UserLoggedOut>(_onLoggedOut);
     on<UserInit>(_onStarted);
+    mapEventToState;
   }
 
 
@@ -51,13 +52,20 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     _authService.logOut();
   }
 
-  void _onStarted(UserInit event, Emitter<AuthState> emit) {
-    emit(AutStateInit.noUser());
+  Future<void> _onStarted(UserInit event, Emitter<AuthState> emit) async {
+    final isSignedIn = await _authService.isSignedIn();
+    if (isSignedIn) {
+      final user = await _authService.getUserFromFirebase();
+      AuthStateAuthetificated(user);
+    }
+    else {
+      AuthStateNotAuthentificated();
+    }
     print("Starting log in");
   }
-  
-  void _onLoggedIn(UserLoggedIn event, Emitter<AuthState> emit) {
-    emit(AuthStateAuthetificated(event.user));
+
+  Future<void> _onLoggedIn(UserLoggedIn event, Emitter<AuthState> emit) async {
+    emit(AuthStateAuthetificated(await _authService.getUserFromFirebase()));
     print("Logged in");
   }
 
