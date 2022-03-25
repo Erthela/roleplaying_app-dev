@@ -50,7 +50,7 @@ class _FormView extends State<FormView> {
 
   @override
   Widget build(BuildContext context) {
-    final _user = context.select((AuthBloc bloc) => bloc.state.user!.id);
+    final _user = context.select((AuthBloc bloc) => bloc.state.getUser()!.id);
 
     return Scaffold(
       body: Stack(
@@ -259,7 +259,7 @@ class _FormView extends State<FormView> {
     _title = _titleController.text;
     _text = _textController.text;
 
-    Profile _form = Profile(context.select((AuthBloc bloc) => bloc.state.user!.id), _title, _text);
+    Profile _form = Profile(context.select((AuthBloc bloc) => bloc.state.getUser()!.id), _title, _text);
 
     print(_form.toString());
 

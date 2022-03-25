@@ -189,7 +189,6 @@ class _AuthView extends State<AuthView> {
                                         if (user.id.isNotEmpty) {
                                           context.read<AuthBloc>().add(
                                               UserLoggedIn(user: user));
-                                          print("User id $user");
                                         }
                                         if (user.isEmpty) {
                                           Fluttertoast.showToast(
@@ -201,11 +200,8 @@ class _AuthView extends State<AuthView> {
                                               textColor: Colors.white,
                                               fontSize: 16.0
                                           );
-                                          print("User id $user");
                                         } else {
-                                          print(context
-                                              .read<AuthBloc>()
-                                              .state.user);
+
                                         }
                                       }
                                   )
@@ -218,6 +214,9 @@ class _AuthView extends State<AuthView> {
                     BlocListener<AuthBloc, AuthState>(
                       listener: (context, state) {
                         if (state is AuthStateAuthetificated) {
+                          print(context
+                              .read<AuthBloc>()
+                              .state.getUser());
                           Navigator.pushNamed(context, '/menu_screen');
                         }
                       },

@@ -1,24 +1,29 @@
 part of 'auth_bloc.dart';
 
 abstract class AuthState extends Equatable {
-  UserModel? user;
+  final UserModel _user;
 
-  AuthState(this.user);
-  AuthState.noUser();
+  const AuthState(this._user);
 
   @override
   List<Object> get props => [];
+
+  UserModel? getUser(){
+    return _user;
+  }
 }
 
 class AutStateInit extends AuthState {
-  AutStateInit.noUser() : super.noUser();
+  const AutStateInit(UserModel user) : super(user);
 }
 
 class AuthStateAuthetificated extends AuthState {
-  AuthStateAuthetificated(UserModel user) : super(user);
+  AuthStateAuthetificated(UserModel user) : super(user){
+    print(_user);
+  }
 
   @override
-  String toString() => 'UserSignedIn {User: $user}';
+  String toString() => 'UserSignedIn {User: $_user}';
 }
 
 class AuthStateNotAuthentificated extends AuthState {
